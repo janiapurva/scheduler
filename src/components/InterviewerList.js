@@ -5,7 +5,6 @@ import InterviewerListItem from  "components/InterviewerListItem.js";
 
 
 
-// { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
 
 
 export default function InterviewerList(props){
