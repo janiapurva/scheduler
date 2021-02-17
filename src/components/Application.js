@@ -1,28 +1,11 @@
-import React,{ useState } from "react";
-
+import React,{ useState,useEffect } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList.js"
 import  "components/Appointment";
 import Appointment from "components/Appointment";
+const axios = require('axios');
 
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 
 const appointments = [
@@ -44,14 +27,6 @@ const appointments = [
   }
 ];
 
-
-
-
-
-
-
-
-
 const appointment =appointments.map((eachAppointment)=> {
   return(
     <Appointment key = {eachAppointment.id}{...eachAppointment} />
@@ -61,12 +36,22 @@ const appointment =appointments.map((eachAppointment)=> {
 
 
 
+export default function Application() {
+  const [days,setDays] = useState([]);
+  const [day,setDay] = useState(null)
+  //making request for Api
+useEffect(()=>{
+  axios.get('/api/days').then((response)=>{
+    console.log([response.data])
+    
+    setDays(response.data)
+    
+    
+  }
+  )
 
+},[])
 
-
-
-export default function Application(props) {
-  const [day,setDay] = useState("Monday");
   return (
     <main className="layout">
       <section className="sidebar">
@@ -88,7 +73,6 @@ export default function Application(props) {
   alt="Lighthouse Labs"
 />
       </section>
-
       <section className="schedule">
       {appointment}
         
