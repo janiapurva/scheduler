@@ -8,15 +8,7 @@ const axios = require('axios');
 
 
 
-
-
-
-
-
-
-
 export default function Application() {
-  
   
   const [state, setState] = useState({
     day: "Monday",
@@ -26,12 +18,7 @@ export default function Application() {
   });
 
   
-  
-  
-  
-  
   const setDay = day => setState(prev => ({ ...prev, day }));
-  // const setDays = days => setState(prev => ({...prev,days}))
   //making request for Api
 useEffect(()=>{
   Promise.all([
@@ -46,8 +33,6 @@ useEffect(()=>{
       interviewers:response[2].data
     }))
   })
-  
-
 },[])
 
 const appointments = getAppointmentsForDay(state,state.day);
@@ -85,7 +70,6 @@ const schedule =appointments.map(appointment => {
 />
       </section>
       <section className="schedule">
-      
         {schedule}
       <Appointment key="last" time="5pm" />  
     </section>
