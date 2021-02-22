@@ -15,7 +15,6 @@ function getSpotsLeftForDay(day, appointments) {
   return freeSpots;
 }
 
-
 function decoDaysWithSpots(days, appointments) {
   const decoratedDays = days.map(day => ({
     ...day,
