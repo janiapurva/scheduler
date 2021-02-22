@@ -10,6 +10,18 @@ export function getAppointmentsForDay(state, day) {
 }
 
 
+// Gets the interviewers for a specific day
+export function getInterviewersForDay(state, dayName) {
+  const validDayNames = state.days.map(dayObj => dayObj.name);
+  if (!dayName || !validDayNames.includes(dayName)) return [];
+
+  const todayObj = state.days.filter(dayObj => dayObj.name === dayName)[0];
+  const interviewersObj = todayObj.interviewers.map(
+    interId => state.interviewers[interId]
+  );
+  return interviewersObj;
+}
+
 // Gets an interview 
 export function getInterview(state, interview) {
   if (!interview) return null;
