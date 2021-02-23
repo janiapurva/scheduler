@@ -14,11 +14,11 @@ let dayClass = classNames("day-list__item",{
 })
 function formatSpots(props) {
   if(props.spots === 0){
-  return `no spots remaining`
+  return 'no spots remaining'
   } else if(props.spots === 1 ){
-    return `${props.spots} spot remaining`
+    return `${props.spots} spot remaining`;
 }else{
-  return `${props.spots} spots remaining`
+  return `${props.spots} spots remaining`;
 }
 }
 
