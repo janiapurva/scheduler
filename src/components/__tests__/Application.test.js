@@ -19,6 +19,8 @@ import "@testing-library/jest-dom/extend-expect";
 
 import Application from "components/Application";
 
+afterEach(cleanup);
+
 describe("Application", () => {
   it("defaults to Monday and changes the schedule when a new day is selected", () => {
     const { getByText } = render(<Application />);
@@ -30,7 +32,7 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -57,7 +59,7 @@ describe("Application", () => {
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // 1. Render the Application.
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
     // 3. Click the "Delete" button on the booked appointment.
@@ -88,10 +90,10 @@ describe("Application", () => {
     );
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // We want to start by finding an existing interview.
     // 1. Render the Application.
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     // 2. Wait until the text "Archie Cohen" is displayed.
     //debug()
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -105,7 +107,7 @@ describe("Application", () => {
     fireEvent.click(getByAltText(appointment, "Edit"));
 
     // We change the name and save the interview.
-    await waitForElement(() => getByText(container, "Archie Cohen"));
+    waitForElement(() => getByText(container, "Archie Cohen"));
 
     // We don't want the spots to change for "Monday", since this is an edit.
     const day = getAllByTestId(container, "day").find((day) =>
@@ -114,38 +116,52 @@ describe("Application", () => {
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
     // Read the errors because sometimes they say that await cannot be outside of an async function
   });
-  it("shows the save error when failing to save an appointment", () => {
-    axios.put.mockRejectedValueOnce();
-  });
 
   it("shows the save error when failing to save an appointment", async () => {
-    const { container, debug } = render(<Application />);
-    // 2. Wait until the text "Archie Cohen" is displayed.
-    // debug()
+    axios.put.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointments = getAllByTestId(container, "appointment");
+
+    const appointment = appointments[0];
+
+    fireEvent.click(getByAltText(appointment, "Add"));
+
+    fireEvent.change(getByPlaceholderText(appointment, "Enter Student Name"), {
+      target: { value: "Lydia Miller-Jones" },
+    });
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    fireEvent.click(getByText(appointment, "Save"));
+    await waitForElement(() => getByText(appointment, "Saving"));
+    expect(getByText(appointment, "Error")).toBeInTheDocument();
+
+    expect(
+      getByText(appointment, "There was an error saving your appointment")
+    ).toBeInTheDocument();
+  });
+
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const appointment = getAllByTestId(
       container,
       "appointment"
     ).find((appointment) => queryByText(appointment, "Archie Cohen"));
-    fireEvent.click(getByAltText(appointment, "Edit"));
 
-    fireEvent.click(getByText(appointment, "Save"));
-    
-    // await waitForElement(()=> getByText(appointment, "Saving"));
-
-    // expect(
-    //   getByText(appointment, "There was an error saving your appointment")
-    // ).toBeInTheDocument();
-
-
-  });
-
-  it("shows the delete error when failing to delete an existing appointment", () => {
-
-
-
-
-
+    fireEvent.click(getByAltText(appointment, "Delete"));
+    expect(
+      getByText(appointment, "Are you sure you want to delete?")
+    ).toBeInTheDocument();
+    fireEvent.click(getByText(appointment, "Confirm"));
+    await waitForElement(() => getByText(appointment, "Deleting"));
+    expect(getByText(appointment, "Error")).toBeInTheDocument();
+    expect(
+      getByText(appointment, "There was an error deleting your appointment")
+    ).toBeInTheDocument();
   });
 });
