@@ -34,7 +34,7 @@ function validate() {
     setError('Please select an interviewer');
     return;
   }
-
+  
   setError('');
   props.onSave(name, interviewer);
 }
@@ -49,6 +49,7 @@ function validate() {
         placeholder="Enter Student Name"
         value = {name}
         onChange ={event => setName(event.target.value)}
+        data-testid="student-name-input"
         /*
           
           This must be a controlled component

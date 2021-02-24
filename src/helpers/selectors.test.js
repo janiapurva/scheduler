@@ -114,3 +114,13 @@ test("getInterviewersForDay returns an array containing the correct appointment 
   const [first] = getInterviewersForDay(state, "Tuesday");
   expect(first).toEqual(state.interviewers["1"]);
 });
+
+test('getInterviewersForDay returns an empty array when the days data is empty', () => {
+  const result = getInterviewersForDay({ days: [] }, 'Monday');
+  expect(result.length).toEqual(0);
+});
+
+test('getInterviewersForDay returns an empty array when the day is not found', () => {
+  const result = getInterviewersForDay(state, 'Wednesday');
+  expect(result.length).toEqual(0);
+});
