@@ -44,9 +44,9 @@ npm run cypress
 
 !["Confirm Window"](https://github.com/janiapurva/scheduler/blob/master/docs/Delete%20confirm.png)
 
-### Deleting Window
+### Error Window
 
-!["Deleting process"](https://github.com/janiapurva/scheduler/blob/master/docs/Error%20Deleting.png)
+!["Error process"](https://github.com/janiapurva/scheduler/blob/master/docs/Error%20Deleting.png)
 
 ## Dependencies
 
