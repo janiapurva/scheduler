@@ -1,24 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { useReducer, useEffect } from 'react';
-import axios from 'axios';
+import { useReducer, useEffect } from "react";
+import axios from "axios";
 import reducer, {
   SET_DAY,
   SET_APPLICATION_DATA,
-  SET_INTERVIEW
-} from 'reducers/application';
+  SET_INTERVIEW,
+} from "reducers/application";
 
-// creting booking request / cancelling interview 
+// creting booking request / cancelling interview
 export default function useApplicationData() {
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: { ...interview },
     };
-
 
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [id]: appointment,
     };
 
     dispatch({ type: SET_INTERVIEW, id: id, interview: interview });
@@ -29,44 +28,41 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`).then(() => {
       const nullAppointment = {
         ...state.appointments[id],
-        interview: null
+        interview: null,
       };
 
       // eslint-disable-next-line no-unused-vars
       const appointments = {
         ...state.appointments,
-        [id]: nullAppointment
+        [id]: nullAppointment,
       };
 
       dispatch({ type: SET_INTERVIEW, id: id, interview: null });
     });
   }
 
-
   const [state, dispatch] = useReducer(reducer, {
-    day: 'Monday',
+    day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: {},
   });
 
-  const setDay = day => dispatch({ type: SET_DAY, day: day });
+  const setDay = (day) => dispatch({ type: SET_DAY, day: day });
 
-
-
-// calling all Api server
+  // calling all Api server
 
   useEffect(() => {
     Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
-    ]).then(all => {
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
       dispatch({
         type: SET_APPLICATION_DATA,
         days: all[0].data,
         appointments: all[1].data,
-        interviewers: all[2].data
+        interviewers: all[2].data,
       });
     });
   }, []);
@@ -74,6 +70,6 @@ export default function useApplicationData() {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
   };
 }

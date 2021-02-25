@@ -60,9 +60,9 @@ describe("Form", () => {
     });
     fireEvent.click(getByText("Save"));
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
-    onSave(1)
+    onSave(1);
     expect(onSave).toHaveBeenCalledTimes(1);
-    onSave("Lydia Miller-Jones", null)
+    onSave("Lydia Miller-Jones", null);
     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
   });
 
