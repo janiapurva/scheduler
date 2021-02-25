@@ -25,29 +25,26 @@ npm run cypress
 
 
 ### Home Page
-!["Show Page"](https://github.com/janiapurva/tweeter/blob/master/doc/Home.png)
+!["Show Page"](https://github.com/janiapurva/scheduler/blob/master/docs/Booked%20View.png)
 
-
-
-### Home Page
-!["appointment View"](https://github.com/janiapurva/tweeter/blob/master/doc/Responsive.png)
 
 ### Entering  Name
-!["Entering Name"](https://github.com/janiapurva/tweeter/blob/master/doc/Error.png)
+!["Entering Name"](https://github.com/janiapurva/scheduler/blob/master/docs/Entering%20name.png)
 
 ### Error Notification
-!["Error select Interview"](https://github.com/janiapurva/tweeter/blob/master/doc/Error.png)
+!["Error select Interview"](https://github.com/janiapurva/scheduler/blob/master/docs/Error%20while%20empty%20input.png)
 
 
 ### Saving Window
-!["Saving Window"](https://github.com/janiapurva/tweeter/blob/master/doc/Error.png)
+!["Saving Window"](https://github.com/janiapurva/scheduler/blob/master/docs/Saving.png)
 
+### Confirm Window
+!["Confirm Window"](https://github.com/janiapurva/scheduler/blob/master/docs/Delete%20confirm.png)
 
 ### Deleting Window
-!["Deleting process"](https://github.com/janiapurva/tweeter/blob/master/doc/Error.png)
+!["Deleting process"](https://github.com/janiapurva/scheduler/blob/master/docs/Error%20Deleting.png)
 
-### Error Window
-!["Login Home"](https://github.com/janiapurva/tweeter/blob/master/doc/Error.png)
+
 
 
 
